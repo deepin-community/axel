@@ -1,5 +1,660 @@
-template-repository (1.0-1) unstable; urgency=medium
+axel (2.17.11-3) unstable; urgency=medium
 
-  * Initial release
+  * debian/copyright:
+      - Converted the last paragraph of the GPL-2 in a comment.
+      - Updated packaging copyright years.
+  * debian/watch: simplified the search rule.
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 14 Jan 2023 16:28:39 -0300
+
+axel (2.17.11-2) unstable; urgency=medium
+
+  * debian/control: bumped Standards-Version to 4.6.1.
+  * debian/upstream/metadata: removed extra field Donation.
+  * debian/watch: updated the search rule to make it compliant with new
+    standards of the GitHub.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Tue, 27 Sep 2022 23:13:52 -0300
+
+axel (2.17.11-1) unstable; urgency=medium
+
+  * New upstream version 2.17.11.
+  * debian/control: bumped Standards-Version to 4.6.0.
+  * debian/copyright: updated packaging and copyright years.
+  * debian/upstream/metadata: added Donation field.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Thu, 27 Jan 2022 20:28:15 -0300
+
+axel (2.17.10-2) unstable; urgency=medium
+
+  * debian/control: bumped Standards-Version to 4.5.1.
+  * debian/copyright: updated packaging copyright years.
+  * debian/tests/control: added allow-stderr restriction to some CI tests
+    to avoid fails on arm64. Thanks to Paul Gevers. (Closes: #986246)
+  * debian/watch: updated the search rule to make it compliant with new
+    standards from GitHub.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Thu, 01 Apr 2021 15:20:36 -0300
+
+axel (2.17.10-1) unstable; urgency=medium
+
+  * New upstream version 2.17.10.
+  * debian/docs: removed AUTHORS and CREDITS, no longer in upstream source
+    code.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Wed, 25 Nov 2020 22:37:39 -0300
+
+axel (2.17.9-1) unstable; urgency=medium
+
+  * New upstream version 2.17.9.
+  * debian/control: migrated DH level to 13.
+  * debian/rules: created override_dh_auto_configure to pass --disable-Werror
+    to configure process.
+  * debian/tests/control:
+      - Added a new test, now against localhost.
+      - Added needs-internet to all non-superficial and non-local tests.
+      - Set the first test as superficial.
+  * debian/upstream/metadata: fixed Bug-Submit field.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Tue, 16 Jun 2020 18:35:58 -0300
+
+axel (2.17.8-1) unstable; urgency=medium
+
+  [ Joao Eriberto Mota Filho ]
+  * New upstream version 2.17.8.
+  * debian/copyright:
+      - Added rights for new authors and new files.
+      - Updated some upstream dates.
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit (from
+    ./configure), Repository, Repository-Browse.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Mon, 06 Apr 2020 18:56:33 -0300
+
+axel (2.17.7-1) unstable; urgency=medium
+
+  * New upstream version 2.17.7.
+  * debian/control: bumped Standards-Version to 4.5.0.
+  * debian/copyright: updated packaging copyright years.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 26 Jan 2020 22:45:54 -0300
+
+axel (2.17.6-2) unstable; urgency=medium
+
+  * debian/control:
+      - Added 'Rules-Requires-Root: no' to source stanza.
+      - Bumped Standards-Version to 4.4.1.
+  * debian/salsa-ci.yml: added to provide CI tests for Salsa.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 20 Oct 2019 23:01:35 -0300
+
+axel (2.17.6-1) unstable; urgency=medium
+
+  * New upstream version 2.17.6.
+  * debian/clean: no longer needed. Removed.
+  * debian/control: removed no longer needed build dependency txt2man.
+  * debian/docs: removed no longer existent files (doc/API and doc/ROADMAP).
+  * debian/watch: using download path instead of archive in GitHub.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Thu, 29 Aug 2019 21:44:19 -0300
+
+axel (2.17.5-1) unstable; urgency=medium
+
+  * New upstream version 2.17.5.
+  * debian/clean: created to remove some files forgotten by build system.
+  * debian/control:
+      - Bumped Standards-Version to 4.4.0.
+      - Added txt2man to Build-Depends field.
+  * debian/copyright:
+      - Added rights for Todd C. Miller, using ISC license.
+      - Removed BSD-3-Clause license and a reference to file autogen.sh, no
+        longer used by the upstream.
+  * debian/patches/10_update-translations.patch: removed because the upstream
+    fixed the source code. Thanks.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Fri, 26 Jul 2019 21:13:06 -0300
+
+axel (2.17.3-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 07 Jul 2019 11:27:10 -0300
+
+axel (2.17.3-1) experimental; urgency=medium
+
+  * New upstream version 2.17.3.
+  * Using new DH level format. Consequently:
+      - debian/compat: removed.
+      - debian/control: changed from 'debhelper' to 'debhelper-compat' in
+        Build-Depends field and bumped level to 12.
+  * debian/control:
+      - Added a new build dependency (autoconf-archive).
+      - Bumped Standards-Version to 4.3.0.
+  * debian/copyright: updated upstream and packaging copyright years.
+  * debian/patches/10_update-translations.patch: added to refresh the
+    translations.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Tue, 11 Jun 2019 13:31:21 -0300
+
+axel (2.16.1-4) unstable; urgency=medium
+
+  * debian/tests/control:
+      - Added exit 77 on error and restriction skippable for all calls against
+        people.debian.org. (Closes: #916476)
+      - Added -k for test 2. (Closes: #916476)
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 15 Dec 2018 13:22:52 -0200
+
+axel (2.16.1-3) unstable; urgency=medium
+
+  * debian/control: bumped Standards-Version to 4.2.1.
+  * debian/tests/control:
+      - Added new tests.
+      - Removed unneeded Depends field.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Wed, 12 Dec 2018 22:48:52 -0200
+
+axel (2.16.1-2) unstable; urgency=medium
+
+  * Migrated DH level to 11.
+  * debian/control:
+      - Bumped Standards-Version to 4.2.0.
+      - Changed Vcs-* URLs to salsa.debian.org.
+  * debian/tests/control: added to perform a test.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Tue, 21 Aug 2018 21:32:35 -0300
+
+axel (2.16.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: added pkg-config as build dependency.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Tue, 05 Dec 2017 17:01:49 -0200
+
+axel (2.16-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/copyright: added rights for Ismael Luceno in po/* block.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 25 Nov 2017 14:03:42 -0200
+
+axel (2.15-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: bumped Standards-Version to 4.1.1.
+  * debian/copyright:
+      - Removed a reference to man/generate-man.sh because
+        this file no longer exists.
+      - Updated information about upstream authors.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Wed, 11 Oct 2017 13:14:40 -0300
+
+axel (2.14.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 16 Sep 2017 22:19:49 -0300
+
+axel (2.14-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #449513, LP: #922963)
+  * New upstream homepage. (Closes: #874710)
+  * debian/copyright: updated information about upstream authors.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 10 Sep 2017 15:45:07 -0300
+
+axel (2.13.1-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #645234)
+  * debian/control:
+      - Bumped Standards-Version to 4.0.0.
+      - Removed unneeded build dependency dh-autoreconf.
+  * debian/copyright:
+      - Added some new authors.
+      - Updated the upstream and packaging copyright years.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Thu, 03 Aug 2017 10:22:39 -0300
+
+axel (2.12-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Ack for NMU. Thanks to Raphaël Hertzog <hertzog@debian.org>.
+    (Closes: #829452)
+  * Bumped DH level to 10.
+  * debian/copyright: added the right for a new upstream.
+  * debian/patches/Fix-a-build-failure-when-using-OpenSSL-1.1.0.patch: dropped.
+    The upstream already fixed the source code.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 25 Dec 2016 19:48:14 -0200
+
+axel (2.11-1.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Add a patch to build with OpenSSL 1.1. Closes: #829452
+
+ -- Raphaël Hertzog <hertzog@debian.org>  Tue, 22 Nov 2016 16:44:29 +0100
+
+axel (2.11-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 05 Jun 2016 11:20:23 -0300
+
+axel (2.10-1) unstable; urgency=medium
+
+  * New upstream release.
+      - Now, Axel supports SSL/TLS. (LP: #253906)
+      - The upstream improved the manpage. (Closes: #621728)
+  * debian/control:
+      - Added libssl-dev to Build-Depends field.
+      - Improved the long description.
+  * debian/copyright:
+      - New licensing for upstream source code and packaging. Now, Axel uses
+        GPL-2+ with OpenSSL exception. (Closes: #823424)
+      - Updated all information and added some rights.
+  * debian/docs: added the NEWS file.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 04 Jun 2016 20:39:41 -0300
+
+axel (2.7-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: bumped Standards-Version to 3.9.8.
+  * debian/copyright: added rights for Mridul Malpotra.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Mon, 02 May 2016 21:43:54 -0300
+
+axel (2.6-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Upload to unstable.
+  * debian/copyright:
+      - Added an additional po/* block to make easier the copyright
+        verification.
+      - Added new upstream authors.
+      - Fixed the years range for me in first block.
+      - Updated some copyright years.
+  * debian/docs:
+      - Added CONTRIBUTING.md.
+      - Removed README.to-contribute.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 20 Mar 2016 21:14:38 -0300
+
+axel (2.5+git20160320.625aa0c-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Using dh-autoreconf now.
+  * debian/control:
+      - Bumped Standards-Version to 3.9.7.
+      - Changed from cgit to git in Vcs-Browser field.
+      - Updated the Vcs-* fields to use https instead of http and git.
+  * debian/copyright: updated the upstream and packaging copyright years.
+  * debian/docs:
+      - Added the AUTHORS file.
+      - Removed README file, no longer existent in upstream source code.
+      - Using the new path to search API and ROADMAP.
+  * debian/examples: added to install the axelrc.example file. (Closes: #818713)
+  * debian/watch: bumped to version 4.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 20 Mar 2016 03:54:53 -0300
+
+axel (2.5-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Fri, 06 Nov 2015 07:32:32 -0200
+
+axel (2.5-1) experimental; urgency=medium
+
+  * New upstream release.
+  * New upstream homepage.
+  * Removed all patches. The upstream fixed the source code.
+  * debian/clean: useless now. Removed.
+  * debian/control: fixed a typo in long description.
+  * debian/copyright: updated all information about the upstream.
+  * debian/docs: added some files.
+  * debian/examples: removed because the axelrc.example is already
+      installed in /etc.
+  * debian/README.Debian: removed. The upstream fixed the source code.
+  * debian/rules: updated the override_dh_auto_configure target.
+  * debian/source/options: removed. The upstream fixed the source code.
+  * debian/watch: updated.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 01 Nov 2015 21:20:13 -0200
+
+axel (2.4-2) unstable; urgency=medium
+
+  * New maintainer.
+  * Reintroduce to Debian archive. (Closes: #794421)
+  * Migrated DH level to 9.
+  * Acknowledgements (thanks to Osamu Aoki <osamu@debian.org>):
+      - Add hardening with dh v9. (Closes: #645271)
+      - Include unreleased upstream fixes. (Closes: #533103)
+      - Fix FTBFS for GNU/Hurd. (Closes: #532793)
+      - Add ja.po and unfuzzy translations. (Closes: #663286)
+      - Support IPv6. (Closes: #525290)
+  * debian/axel.docs: renamed to docs.
+  * debian/axel.examples renamed to examples.
+  * debian/axel.install: removed because now we have one binary only and the
+      debian/rules was reorganized.
+  * debian/clean: added to remove the ja.po file, created by a patch.
+  * debian/control:
+      - Bumped Standards-Version to 3.9.6.
+      - Improved the short and long descriptions.
+      - Removed the axel-kapt binary. It depends of the kaptain, no longer
+        available in Debian. For details, see #789819 (kaptain) and #791563
+        (axel-kapt). This action solves #791563.
+      - Removed axel-dbg (not useful).
+      - Updated the Vcs-* fields. Using Git now.
+  * debian/copyright: reorganized and updated.
+  * debian/README.Debian: added to explain about axel-kapt.
+  * debian/source/lintian-overrides: removed. The problem was solved.
+  * debian/source/options: created to ignore changes in some 'po' files.
+  * debian/rules:
+      - Added the DEB_BUILD_MAINT_OPTIONS variable to improve the GCC hardening.
+      - Removed some trash and useless lines.
+      - Removed the override_dh_auto_install and override_dh_strip targets.
+  * debian/watch: improved.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sun, 02 Aug 2015 17:31:05 -0300
+
+axel (2.4-1.1) experimental; urgency=low
+
+  * Non-maintainer upload.
+  * Remove dpatch dependency. (E build-depends-on-obsolete-package)
+  * Add hardening with dh v9. Closes: #645271
+  * Include unreleased upstream fixes. Closes: #533103
+  * Fix FTBFS for GNU/Hurd. Closes: #532793
+  * Add ja.po and unfuzzy translations. Closes: #663286
+  * Support IPv6. Closes: #525290
+  * Support copyright-format 1.0 and update policy to 3.9.3.
+
+ -- Osamu Aoki <osamu@debian.org>  Sun, 11 Mar 2012 01:27:37 +0900
+
+axel (2.4-1) unstable; urgency=low
+
+  * New upstream release 2.4
+   + Fixes a thread hang and an array overflow
+   + Work-around for kaptain CPU/Mem overuse (Closes: #378546)
+   + Refresh all patches for new upstream release
+  * Update Standards-Version to 3.8.1 (no changes required)
+  * Change axel-dbg section to debug
+  * Remove call to dh_desktop, not necessary and is a no-op now
+  * Remove hand-crafted handling of DEB_BUILD_OPTIONS (the build system
+    handles it on its own)
+
+ -- Y Giridhar Appaji Nag <appaji@debian.org>  Wed, 29 Apr 2009 14:51:22 +0530
+
+axel (2.3-1) unstable; urgency=low
+
+  * New upstream release 2.3
+    + Remove patches 03_incorrect_version and 04_MBps_display integrated
+      upstream
+    + Refresh patch 01_bug_report to include change to zh_cn.po
+  * New dpatch 03_manpage_err to remove erroneous comments at the
+    beginning of zh_CN axel manpage
+  * Clarify README.source a bit Update Maintainer to official Debian ID
+  * Remove DM-Upload-Allowed: yes
+
+ -- Y Giridhar Appaji Nag <appaji@debian.org>  Wed, 14 Jan 2009 15:05:18 +0530
+
+axel (2.0-1) unstable; urgency=low
+
+  * New upstream release 2.0
+    + Large file support (Closes: #350012)
+    + Remove patch 03_l10n_ru, integrated upstream
+  * New patches
+    + 03_incorrect_version to fix version (2.0 from 1.1)
+    + 04_MBps_display to show MB/s display correctly in alternate
+      progress view
+  * Update Standards-Version to 3.8.0
+    + Add a README.source file (with a pointer) for dpatch
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Fri, 19 Sep 2008 19:51:51 +0530
+
+axel (1.1-3) unstable; urgency=low
+
+  * Update 02_axelkapt to change Categories=Utility;Network;KDE; to
+    Categories=Network;FileTransfer;KDE; in axel-kapt desktop file.
+  * Description synopsis improved, per dev-ref (v3.3.9) Section 6.2.2
+  * Patch 03_l10n_ru to add Russian translation. Translation thanks to
+    newhren <colimit@gmail.com>
+  * Add DM-Upload-Allowed: yes
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Fri, 09 May 2008 22:37:50 +0530
+
+axel (1.1-2) unstable; urgency=low
+
+  * Create a axel-dbg package with axel's debugging symbols in it.  Axel
+    tends to crash sometimes and this would be useful.
+  * Update 08_axelkapt as 02_axelkapt to add a MimeType filed to the desktop
+    file and really install it.
+  * Patch 01_bug_report to set the bug reporting location to Debian.
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Tue, 29 Jan 2008 21:01:45 +0530
+
+axel (1.1-1) unstable; urgency=low
+
+  * New upstream release 1.1.
+  * Add a version 3 debian/watch file
+  * Remove all dpatches except 08_axelkapt, they've been merged upstream.
+    Modified 08_axelkapt for new upstream release.
+  * debian/{control,copyright}: Indicate new upstream homepage and maintainer.
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Fri, 18 Jan 2008 15:57:24 +0530
+
+axel (1.0b-7) unstable; urgency=low
+
+  * Remove unnecessary debian/*.dirs files.
+  * Patch 09_potrans: Updates de.po, thanks Hermann J. Beckers
+    <hj.beckers@onlinehome.de>
+  * Patch 10_manpage: fix lintian I: hyphen-used-as-minus-sign
+  * /usr/doc transition is too old, removed maint scripts
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Wed, 26 Dec 2007 11:19:32 +0530
+
+axel (1.0b-6) unstable; urgency=low
+
+  * Update 08_axelkapt to use simple pop-ups for the Help and Bug Report
+    buttons.
+  * Use && instead of -a for tests in maint scripts.  Fixes lintian
+    informational message I:possible-non-posix-code-in-maintainer-script
+  * Remove empty maint script axel-kapt.postrm, thanks Mario Iseli.
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Mon, 10 Dec 2007 12:50:02 +0530
+
+axel (1.0b-5) unstable; urgency=low
+
+  * Use debhelper for packaging (Closes: #454233)
+  * Bump up Standards-Version to 3.7.3, no changes
+  * Patch 06_buildopts: patch configure script to conform to Policy (10.1
+    Binaries)
+  * Patch 07_desktop: axel-kapt desktop file passes desktop-file-validate.
+    Cleanup in 1.0b-4 made a dpatch
+  * Patch 08_axelkapt: Use x-terminal-emulator instead of hardcoding the
+    terminal program
+  * Use Vcs-*:, move Homepage: from Description: to its own line
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Sun, 09 Dec 2007 20:31:21 +0530
+
+axel (1.0b-4) unstable; urgency=low
+
+  * Acknowledge /usr/doc transition NMU (closes: #359368)
+  * Patch 03_longurl: increase max URL length, Don't crash on long URLs
+    (closes: #196431).
+  * Patch 04_ftpcwd: Prevent crash if FTP CWD fails (closes: #449368)
+  * Patch 05_strncpy: Use strncpy instead of strcpy for length sensitive
+    copies (closes: #449507).
+  * Remove backup (~) files (closes: #448964)
+  * Adopted by Y Giridhar Appaji Nag <giridhar@appaji.net> (closes: #419679).
+  * Bump up Standards-Version to 3.7.2
+  * menu file: Corrected typo and changed section to
+    "Applications/Network/File Transfer", menu file is now installed in
+    /usr/share/menu/
+  * Cleanup the .desktop file
+
+ -- Y Giridhar Appaji Nag <giridhar@appaji.net>  Tue, 06 Nov 2007 19:09:44 +0530
+
+axel (1.0b-3) unstable; urgency=low
+
+  * QA upload.
+  * Use dpatch to manage patches.
+  * Patch 01_kfreebsd: configuration for GNU/kFreeBSD. Based on a patch
+    suggested by Cyril Brulebois (closes: #413856).
+  * Patch 02_http404: fix segfaults on HTTP 404 and HTTP 401 responses. Thanks
+    to Y Giridhar Appaji Nag for sending in the ypatch!
+    (closes: #423414, #312060)
+  * debian/copyright: Added copyright holder and upstream author
+    (closes: #302948)
+  * pass nostrip build option to ./configure. Thanks to Y Giridhar Appaji Nag
+    for sending in the patch! (closes: #436498).
+  * Fixed FSF address in debian/copyright.
+  * Do not ignore errors of "make distclean"
+  * menu file: changed section "Apps" to "Applications".
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 23 Oct 2007 22:35:46 +0200
+
+axel (1.0b-2) unstable; urgency=low
+
+  * QA upload.
+  * Set maintainer to Debian QA Group.
+
+ -- Luk Claes <luk@debian.org>  Sun, 19 Aug 2007 13:34:32 +0000
+
+axel (1.0b-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Get rid of the code that creates the symlink in /usr/doc/ in post install
+    (Closes: #319726, #359368).
+  * Get rid of the /usr/doc/axel* link in post install (Thanks to Holgi for the
+    good eye sight).
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Sat, 17 Jun 2006 18:58:45 +0200
+
+axel (1.0b-1) unstable; urgency=high
+
+  * New 'upstream' release. See CHANGES for real changes.
+  * Fixes buffer overflow in HTTP redirection handling in conn.c.
+    (CAN-2005-0390)
+  * Fixed example configuration file. (Closes: #180939)
+  * Fixed copyright file. (Closes: #302948)
+
+ -- Wilmer van der Gaast <lintux@debian.org>  Wed,  6 Apr 2005 20:21:14 +0200
+
+axel (1.0a-1) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+
+ -- Wilmer van der Gaast <lintux@debian.org>  Tue, 19 Feb 2002 20:08:31 +0100
+
+axel (1.0-3) unstable; urgency=low
+
+  * Removed python-base dependency from axel-kapt (Closes: #124015)
+  * Uploading an axel-kapt deb too now since buildd don't build it.
+
+ -- Wilmer van der Gaast <lintux@debian.org>  Fri, 21 Dec 2001 11:39:05 +0100
+
+axel (1.0-2) unstable; urgency=low
+
+  * Corrected a bug which caused the package not to compile on some archs.
+
+ -- Wilmer van der Gaast <lintux@debian.org>  Sun, 16 Dec 2001 00:40:31 +0100
+
+axel (1.0-1) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+  * Package is not Debian 'native' anymore.
+
+ -- Wilmer van der Gaast <lintux@debian.org>  Thu,  6 Dec 2001 21:42:12 +0100
+
+axel (0.99b) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+  * Package depends on python | python-base now. (Closes: #119225)
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri, 16 Nov 2001 15:30:42 +0100
+
+axel (0.99a) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Sat, 10 Nov 2001 02:15:43 +0100
+
+axel (0.99) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri,  9 Nov 2001 21:16:48 +0100
+
+axel (0.98) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Sat,  3 Nov 2001 18:07:54 +0100
+
+axel (0.97) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGES for real changes.
+  * New description.
+  * Added Kaptain grammar in a separate axel-kapt package.
+  * This version implements downloading from different servers at once.
+    (Closes: #102003)
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Thu, 25 Oct 2001 02:21:12 +0200
+
+axel (0.96-1) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGELOG for real changes.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Tue, 14 Aug 2001 13:36:12 +0200
+
+axel (0.95-2) unstable; urgency=low
+
+  * Package does not use debhelper anymore: A nice exercise from my Debian
+    application manager. :-)
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Tue,  7 Aug 2001 15:55:56 +0200
+
+axel (0.95-1) unstable; urgency=low
+
+  * New 'upstream' release. See CHANGELOG for real changes.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri, 29 Jun 2001 12:39:53 +0200
+
+axel (0.94-2) unstable; urgency=low
+
+  * Rewritten the package description. (Closes: #101716)
+  * Converted the package to a newer standards version.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri, 29 Jun 2001 12:34:52 +0200
+
+axel (0.94-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Tue, 26 Jun 2001 22:04:57 +0200
+
+axel (0.93-2) unstable; urgency=low
+
+  * Added Build-Depends header.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Sun, 27 May 2001 13:56:48 +0200
+
+axel (0.93-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Tue, 22 May 2001 15:33:23 +0200
+
+axel (0.92-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri, 11 May 2001 14:09:54 +0200
+
+axel (0.91-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Wilmer van der Gaast <lintux@lintux.cx>  Fri,  4 May 2001 18:18:28 +0200

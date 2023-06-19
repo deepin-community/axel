@@ -1,0 +1,20 @@
+Test-Command: axel --version
+Restrictions: superficial
+
+Test-Command: axel 127.0.0.1 -o $AUTOPKGTEST_TMP || exit 77
+Restrictions: allow-stderr, skippable
+
+Test-Command: axel -k -o $AUTOPKGTEST_TMP/test.img http://people.debian.org/~eriberto/tests-axel/test.img || exit 77
+Restrictions: allow-stderr, needs-internet, skippable
+
+Test-Command: axel -4 -k -s 1000000 -o $AUTOPKGTEST_TMP/test-new.img -U axel-test http://people.debian.org/~eriberto/tests-axel/test.img || exit 77
+Restrictions: allow-stderr, needs-internet, skippable
+
+Test-Command: axel -4 -k -s 1000000 -o $AUTOPKGTEST_TMP/test-new.img -U axel-test https://people.debian.org/~eriberto/tests-axel/test.img || exit 77
+Restrictions: allow-stderr, needs-internet, skippable
+
+Test-Command: axel -6 -k -s 1000000 -o $AUTOPKGTEST_TMP/test-new.img -U axel-test http://people.debian.org/~eriberto/tests-axel/test.img || exit 77
+Restrictions: allow-stderr, needs-internet, skippable
+
+Test-Command: axel -6 -k -s 1000000 -o $AUTOPKGTEST_TMP/test-new.img -U axel-test https://people.debian.org/~eriberto/tests-axel/test.img || exit 77
+Restrictions: allow-stderr, needs-internet, skippable
