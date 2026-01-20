@@ -1,3 +1,46 @@
+axel (2.17.14-3) unstable; urgency=medium
+
+  * debian/control:
+      - Bumped Standards-Version to 4.7.3.
+      - Removed no longer needed "Priority: optional" field.
+      - Removed no longer needed "Rules-Requires-Root: no" field.
+  * debian/copyright: updated packaging copyright years.
+  * debian/watch: migrated to version 5.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Mon, 19 Jan 2026 17:25:20 -0300
+
+axel (2.17.14-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * debian/control: bumped Standards-Version to 4.7.0.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Fri, 16 Aug 2024 12:47:26 -0300
+
+axel (2.17.14-1) experimental; urgency=medium
+
+  * New upstream version 2.17.14.
+  * debian/control: added autoconf to Build-Depends field to set a relationship
+    for >= 2.72.
+  * debian/copyright: updated upstream copyright years.
+  * debian/salsa-ci.yml: added allow_failure to reprotest because autoconf
+    >= 2.72 is not available yet for reprotest.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Wed, 22 May 2024 17:57:52 -0300
+
+axel (2.17.13-1) unstable; urgency=medium
+
+  * New upstream version 2.17.13.
+  * debian/control:
+      - Bumped Standards-Version to 4.6.2.
+      - Changed from pkg-config to pkgconf in Build-Depends field.
+  * debian/copyright:
+      - Added new upstream rights.
+      - Updated packaging copyright years.
+  * debian/watch: using filenamemangle to generate right names for downloaded
+    files.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Mon, 12 Feb 2024 21:24:13 -0300
+
 axel (2.17.11-3) unstable; urgency=medium
 
   * debian/copyright:

@@ -47,6 +47,7 @@
 
 #include "config.h"
 #include "axel.h"
+#include "hash.h"
 
 /**
  * Convert an URL to a conn_t structure.
@@ -96,8 +97,6 @@ conn_set(conn_t *conn, const char *set_url)
 	} else {
 		*i = 0;
 		snprintf(conn->dir, MAX_STRING, "/%s", i + 1);
-		if (conn->proto == PROTO_HTTP || conn->proto == PROTO_HTTPS)
-			http_encode(conn->dir, sizeof(conn->dir));
 	}
 	j = strchr(conn->dir, '?');
 	if (j != NULL)
@@ -185,7 +184,7 @@ scheme_from_proto(int proto)
 }
 
 /* Generate a nice URL string. */
-char *
+int
 conn_url(char *dst, size_t len, conn_t *conn)
 {
 	const char *prefix = "", *postfix = "";
@@ -194,7 +193,7 @@ conn_url(char *dst, size_t len, conn_t *conn)
 
 	size_t scheme_len = strlcpy(dst, scheme, len);
 	if (scheme_len > len)
-		return NULL;
+		return -1;
 
 	len -= scheme_len;
 
@@ -203,7 +202,7 @@ conn_url(char *dst, size_t len, conn_t *conn)
 	if (*conn->user != 0 && strcmp(conn->user, "anonymous") != 0) {
 		int plen = snprintf(p, len, "%s:%s@", conn->user, conn->pass);
 		if (plen < 0)
-			return NULL;
+			return -1;
 		len -= plen;
 		p += plen;
 	}
@@ -213,11 +212,8 @@ conn_url(char *dst, size_t len, conn_t *conn)
 		postfix = "]";
 	}
 
-	int plen;
-	plen = snprintf(p, len, "%s%s%s:%i%s%s", prefix, conn->host, postfix,
-			conn->port, conn->dir, conn->file);
-
-	return plen < 0 ? NULL : dst;
+	return snprintf(p, len, "%s%s%s:%i%s%s", prefix, conn->host, postfix,
+	                conn->port, conn->dir, conn->file);
 }
 
 /* Simple... */
@@ -371,6 +367,53 @@ conn_info_ftp(conn_t *conn)
 	return 1;
 }
 
+struct urlseq {
+	uint64_t secret[1];
+	char buf[MAX_STRING];
+	int num_urls;
+	uint32_t visited_urls[];
+};
+
+static
+void *
+urlseq_teardown(struct urlseq **u)
+{
+	free(*u);
+	return *u = NULL;
+}
+
+static
+struct urlseq *
+urlseq_init(unsigned int urlcount)
+{
+	struct urlseq *u;
+	u = malloc(sizeof(*u) + sizeof(u->visited_urls[0]) * urlcount);
+	if (!u || axel_rand64(u->secret) < (ssize_t)sizeof(u->secret[0]))
+		return urlseq_teardown(&u);
+	u->num_urls = 0;
+	return u;
+}
+
+static
+int
+urlseq_check_loop(struct urlseq *u, conn_t *conn)
+{
+	if (!u)
+		return 0;
+
+	int url_len = conn_url(u->buf, sizeof(u->buf), conn);
+	if (url_len <= 0)
+		return 0;
+
+	uint32_t url_hash = axel_hash32(u->buf, url_len, u->secret);
+	for (int j = 0; j < u->num_urls; j++) {
+		if (u->visited_urls[j] == url_hash)
+			return 1;
+	}
+	u->visited_urls[u->num_urls++] = url_hash;
+	return 0;
+}
+
 /* Get file size and other information */
 int
 conn_info(conn_t *conn)
@@ -382,6 +425,8 @@ conn_info(conn_t *conn)
 
 	char s[1005];
 	long long int i = 0;
+
+	struct urlseq *urlseq = urlseq_init(conn->conf->max_redirect);
 
 	do {
 		const char *t;
@@ -432,7 +477,16 @@ conn_info(conn_t *conn)
 			fprintf(stderr, _("Too many redirects.\n"));
 			return 0;
 		}
+
+		/* Check if the current URL has already been visited */
+		if (urlseq_check_loop(urlseq, conn)) {
+			fprintf(stderr, _("Redirect loop detected.\n"));
+			return 0;
+		}
 	} while (conn->http->status / 100 == 3);
+
+	/* Free the memory allocated for the redirect loop detection */
+	urlseq_teardown(&urlseq);
 
 	/* Check for non-recoverable errors */
 	if (conn->http->status != 416 && conn->http->status / 100 != 2)
@@ -467,17 +521,18 @@ conn_info(conn_t *conn)
 	return 1;
 }
 
+/**
+ * Parse HTTP response status code, e.g. "HTTP/1.1 200 OK".
+ */
 int
 conn_info_status_get(char *msg, size_t size, conn_t *conn)
 {
 	if (is_proto_http(conn->proto)) {
 		char *p = conn->http->headers->p;
-		/* Skip protocol and code */
-		while (*p++ != ' ');
-		while (*p++ != ' ');
 		size_t len = strcspn(p, "\r\n");
-		if (len) {
-			strlcpy(msg, p, min(len + 1, size));
+		if (len > 13) {
+			/* Copy human-readable status only */
+			strlcpy(msg, p + 13, min(len - 12, size));
 			return conn->http->status;
 		}
 	}
