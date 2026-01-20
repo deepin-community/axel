@@ -10,8 +10,11 @@ Copyright 2017      Vlad Glagolev
 This file is under the same license as Axel.
 ])
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.72])
 PKG_PREREQ([0.29])
+m4_ifdef([AX_IS_RELEASE],, [
+    m4_fatal([autoconf-archive is required])
+])
 
 AXEL_PKG([axel], [https://github.com/axel-download-accelerator/axel/issues])
 AXEL_VER_READ([VERSION])
@@ -22,11 +25,24 @@ AC_CONFIG_SRCDIR([src/conf.h])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_LIBOBJ_DIR([lib])
+
+dnl Validate arguments; fail early
+AC_ARG_WITH([ssl], [
+AS_HELP_STRING(
+        [--with-ssl=@<:@openssl/wolfssl@:>@],
+        [Which TLS/SSL implementation to use, default: openssl])
+AS_HELP_STRING(
+        [--without-ssl], [disable TLS support])],
+    [AS_CASE(["$withval"],
+        [openssl|wolfssl|yes|no],,
+        [AC_MSG_ERROR([Invalid argument: --with-ssl=$withval])])],
+    [with_ssl=openssl])
+
 AM_INIT_AUTOMAKE([subdir-objects])
 PKG_PROG_PKG_CONFIG
 AS_IF([test -z "$PKG_CONFIG"],
-  [AC_MSG_WARN([pkg-config is needed for auto-configuration of dependencies])
-   PKG_CONFIG=false])
+  [AC_MSG_WARN([pkg-config is needed for auto-configuration of dependencies])])
+export PKG_CONFIG_PATH
 
 AM_SILENT_RULES([yes])
 
@@ -60,8 +76,7 @@ AC_USE_SYSTEM_EXTENSIONS
 
 # Compiler checks
 AC_PROG_CC
-AC_PROG_CC_C99
-AS_IF([test "x$ac_cv_prog_cc_c99" = "xno"], [
+AS_CASE([$ac_prog_cc_stdc], [no|c89], [
     AC_MSG_ERROR([C99 compiler required])
 ])
 
@@ -129,7 +144,16 @@ AC_TYPE_UINT64_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 AC_TYPE_MODE_T
-AC_TYPE_SIGNAL
+
+AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM([#include <sys/types.h>
+#include <signal.h>
+], [return *(signal (0, 0)) (0) == 1;])],
+  [ac_cv_type_signal=int],
+  [ac_cv_type_signal=void])])
+AS_IF([test "x$ac_cv_type_signal" = xint], [
+  AC_MSG_ERROR([return type of signal handlers is not compliant with C89])
+])
 
 # Custom type checks and replacements
 AXEL_CHECK_TYPE([off_t], [sizeof(off_t) >= sizeof(int64_t)])
@@ -175,24 +199,41 @@ AC_REPLACE_FUNCS([ \
 AXEL_CHECK_MACRO([O_NONBLOCK], [fcntl.h])
 
 # Optional (but included-by-default) ssl support
-AC_ARG_WITH([ssl],
-    AC_HELP_STRING([--without-ssl],[disable TLS support]), [], [with_ssl=yes])
-
+AS_IF([test "x$with_ssl" = xyes], [with_ssl=openssl])
 AM_CONDITIONAL([WITH_SSL], [test "x$with_ssl" != xno])
+AC_ARG_VAR([SSL_PREFIX], [installation prefix of the TLS/SSL library])
 AS_IF([test "x$with_ssl" != xno], [
-    AS_IF([test "x$with_ssl" = xyes], [], [
-        PKG_CONFIG_PATH="$with_ssl/lib/pkgconfig$PATH_SEPARATOR$PKG_CONFIG_PATH"
-        export PKG_CONFIG_PATH
+    save_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+    AS_IF([test ${SSL_PREFIX+y}], [
+	PKG_CONFIG_PATH="$SSL_PREFIX/lib/pkgconfig$PATH_SEPARATOR$PKG_CONFIG_PATH"
     ])
-    PKG_CHECK_MODULES([SSL], [openssl])
+    PKG_CHECK_MODULES([SSL], [$with_ssl])
     AC_DEFINE([HAVE_SSL], [1], [SSL])
-    save_LIBS="$LIBS"
-    LIBS="$LIBS $SSL_LIBS"
-    AC_REPLACE_FUNCS([ \
-        ASN1_STRING_get0_data \
-    ])
-    LIBS="$save_LIBS"
-], AC_MSG_NOTICE([SSL support disabled]))
+    AS_CASE(["$with_ssl"],
+	[openssl], [
+	    save_LIBS="$LIBS"
+	    LIBS="$LIBS $SSL_LIBS"
+	    AC_REPLACE_FUNCS([ \
+		ASN1_STRING_get0_data \
+	    ])
+	    LIBS="$save_LIBS"
+	],
+	[wolfssl], [
+	    AC_CHECK_DECLS([
+		X509_NAME_get_entry,
+		X509_get_ext_d2i,
+	        X509_V_OK
+	    ],, [
+	        AC_MSG_ERROR([wolfSSL with extra OpenSSL API compatibility required])
+	    ], [
+	        #include <wolfssl/options.h>
+		#include <wolfssl/wolfcrypt/settings.h>
+		#include <wolfssl/openssl/ssl.h>
+	    ])
+	    AC_DEFINE([HAVE_WOLFSSL], [1], [wolfSSL])
+	])
+    PKG_CONFIG_PATH="$save_PKG_CONFIG_PATH"
+], AC_MSG_NOTICE([TLS/SSL support disabled]))
 
 # Add Gettext
 AM_GNU_GETTEXT([external])

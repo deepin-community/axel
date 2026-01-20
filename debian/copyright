@@ -12,13 +12,14 @@ Copyright: 2001-2007 Wilmer van der Gaast <wilmer@gaast.net, lintux@debian.org>
            2015-2017 Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
            2016      Denis Denisov <denji0k@gmail.com>
            2016      Ivan Gimenez <ivan.gimenez@gmail.com>
+           2016      Jean-Philippe Aumasson <jeanphilippe.aumasson@gmail.com>
            2016      Mridul Malpotra <mridul.malpotra@gmail.com>
            2016      Phillip Berndt <phillip.berndt@googlemail.com>
            2016      Sjjad Hashemian <wolaws@gmail.com>
            2016-2017 Stephen Thirlwall <sdt@dr.com>
            2017      Antonio Quartulli <a@unstable.cc>
            2017      David Polverari <david.polverari@gmail.com>
-           2017-2020 Ismael Luceno <ismael@iodev.co.uk>
+           2017-2024 Ismael Luceno <ismael@iodev.co.uk>
            2017      Vlad Glagolev <scm@vaygr.net>
            2018-2019 Shankar
            2019      Evangelos Foutras
@@ -56,7 +57,7 @@ Copyright: 2001-2005 Wilmer van der Gaast <lintux@debian.org>
            2007      Ralf Treinen <treinen@debian.org>
            2007-2009 Y Giridhar Appaji Nag <appaji@debian.org>
            2012      Osamu Aoki <osamu@debian.org>
-           2015-2023 Joao Eriberto Mota Filho <eriberto@debian.org>
+           2015-2026 Joao Eriberto Mota Filho <eriberto@debian.org>
 License: GPL-2+ with OpenSSL exception
 
 License: GPL-2+ with OpenSSL exception

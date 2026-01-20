@@ -15,8 +15,11 @@ axel_SOURCES = \
 	src/conn.h \
 	src/ftp.c \
 	src/ftp.h \
+	src/hash.c \
+	src/hash.h \
 	src/http.c \
 	src/http.h \
+	src/random.c \
 	src/search.c \
 	src/search.h \
 	src/ssl.h \
@@ -24,17 +27,19 @@ axel_SOURCES = \
 	src/tcp.h \
 	src/text.c
 
+axel_CFLAGS = $(AM_CFLAGS) $(PTHREAD_CFLAGS)
+AM_CFLAGS = $(WARN_CFLAGS) \
+	-Wno-declaration-after-statement \
+	-Wno-error=cast-align \
+	-Wno-error=inline
+
 if WITH_SSL
 axel_SOURCES += \
 	src/dn-match.c \
 	src/ssl.c \
 	src/ssl_verify.c
+AM_CFLAGS += $(SSL_CFLAGS)
 endif
-
-AM_CFLAGS = $(PTHREAD_CFLAGS) $(WARN_CFLAGS) \
-	-Wno-declaration-after-statement \
-	-Wno-error=cast-align \
-	-Wno-error=inline
 
 axel_LDADD = $(LIBOBJS) $(SSL_LIBS) $(LIBINTL) $(PTHREAD_LIBS)
 axel_CC = $(PTHREAD_CC)
